@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>BannerBomb3 TADmuffin Online</title>
+	<style>
+		{{ source('./css/bootstrap.min.css') }}
+	</style>
+	<style>
+		body {
+			color: white;
+			font-size: 1rem;
+		}
+
+		.card-body p a, .card-body li a {
+			text-decoration: underline;
+			text-decoration-color: lightblue;
+			color: lightblue;
+		}
+
+		.btn {
+			white-space: break-spaces;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary" id="navbar" style="border: none">
+		<a class="navbar-brand" href="/">unSAFE_MODE-bb3 archive builder</a>
+		<span id="statusText" class="navbar-text ml-auto">not so safe mode huh?
+		</span>
+	</nav>
+	<main class="container">
+		<br />
+		<br />
+		<div class="card">
+			<div class="card-body">
+				<div class="form-group">
+					<label>movable.sed:</label>
+					<input class="form-control form-control-movable" id="movable" type="file" accept=".sed" />
+				</div>
+				<button class="btn btn-primary btn-success">Download unSAFE_MODE-bb3 Archive for your system!</button>
+			</div>
+		</div>
+		<br />
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Credits</h5>
+				<br/>
+				<h6 class="card-subtitle mb-2 text-muted">This site is provided and maintained by <a
+						href="https://github.com/deadphoenix8091" target="_blank">deadphoenix8091</a>.</h6><br/>
+				<p>The unSAFE_MODE exploit is made by <a href="https://github.com/zoogie" target="_blank">zoogie</a>. This site automates the creation of the payloads required for using the unSAFE_MODE exploit without any additional titles installed on your system, you can find the information you need to build it manually on the official repository <a href="https://github.com/zoogie/unSAFE_MODE" target="_blank">zoogie/unSAFE_MODE</a>.</p>
+				
+				<p>unSAFE_MODE Credits section from the official readme:</p>
+				<p>General Rop/Code</p>
+				<ul>
+					<li>yellows8 <a
+							href="https://github.com/yellows8/3ds_ropkit" target="_blank">https://github.com/yellows8/3ds_ropkit</a>
+						(otherapp loader)</li>
+					<li>dukesrg <a href="https://github.com/dukesrg/rop3ds" target="_blank">https://github.com/dukesrg/rop3ds</a> (rop
+						templates, macros)</li>
+					<li>smealum <a href="https://github.com/zoogie/ninjhax2.x" target="_blank">https://github.com/zoogie/ninjhax2.x</a>
+						(ninjhax fork with cfg:s changes - superto and o3ds_newpayloads branches)</li>
+				</ul>
+				<p>Safehax related</p>
+				<ul>
+					<li>kartik <a
+							href="https://github.com/hax0kartik/pre9otherapp" target="_blank">https://github.com/hax0kartik/pre9otherapp</a>
+						(k11/a9 sploit framework)</li>
+					<li>aliaspider <a
+							href="https://github.com/aliaspider/svchax/" target="_blank">https://github.com/aliaspider/svchax/</a>
+						(memchunkhax1)</li>
+					<li>patois <a href="https://github.com/patois/Brahma" target="_blank">https://github.com/patois/Brahma</a>
+						(firmlaunchhax)</li>
+					<li>tuxsh <a href="https://github.com/TuxSH/usr2arm9ldr" target="_blank">https://github.com/TuxSH/usr2arm9ldr</a>
+						(rsaverify)</li>
+					<li>normmatt <a
+							href="https://gist.github.com/Normmatt/b72f7323686af5c9cd7" target="_blank">https://gist.github.com/Normmatt/b72f7323686af5c9cd7</a>
+						(rsaverify)</li>
+					<li>SciresM <a
+							href="https://github.com/SciresM/boot9strap" target="_blank">https://github.com/SciresM/boot9strap</a> (mini
+						b9s installer template &amp; b9s itself)</li>
+					<li>AuroraWright <a
+							href="https://github.com/AuroraWright/SafeA9LHInstaller" target="_blank">https://github.com/AuroraWright/SafeA9LHInstaller</a>
+						(writefirm)</li>
+				</ul>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		function buf2hex(buffer) { // buffer is an ArrayBuffer
+			return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+		}
+
+		document.querySelector('button').addEventListener('click', function (e) {
+			var fileInput = document.getElementById("movable");
+			var fileList = fileInput.files;
+			if (fileList.length === 1) {
+				var file = fileInput.files[0];
+				var fileReader = new FileReader();
+
+				fileReader.addEventListener("loadend", function () {
+					console.log(fileList[0].size);
+					if (fileList[0].size !== 288 && fileList[0].size !== 320) {
+						alert('movable.sed size invalid, are you sure it is a movable.sed?');
+						return false;
+					}
+					var arrayBuffer = fileReader.result;
+					var keyYBuffer = arrayBuffer.slice(0x110, 0x120);
+					var keyYHex = buf2hex(keyYBuffer);
+					window.location = '/?keyY=' + keyYHex;
+				});
+				fileReader.readAsArrayBuffer(file);
+			} else {
+				alert('Please select your movable.sed first!');
+				return false;
+			}
+			return true;
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+{
+    "name": "deadphoenix8091/usm-archive-builder",
+    "type": "project",
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
